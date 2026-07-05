@@ -1,11 +1,44 @@
 import { a as __toESM } from "../_runtime.mjs";
-import { n as require_jsx_runtime, r as require_react } from "../_libs/react+tanstack__react-query.mjs";
+import { a as Trigger2, c as require_react, i as Root2, n as Header, r as Item, s as require_jsx_runtime, t as Content2 } from "../_libs/@radix-ui/react-accordion+[...].mjs";
+import { g as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as objectType, r as stringType } from "../_libs/zod.mjs";
 import { t as motion } from "../_libs/motion.mjs";
-import { _ as Award, a as Sparkles, c as Play, d as Database, f as CodeXml, g as Check, h as ChevronDown, i as Star, l as LoaderCircle, m as CircleCheck, n as X, o as ShieldCheck, p as Clock, r as Users, s as Rocket, t as Zap, u as Layers } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-BXIgWQWQ.js
+import { _ as CircleCheck, a as Sparkles, b as Award, c as Play, d as LoaderCircle, f as Layers, g as Clock, h as CodeXml, i as Star, m as Database, n as X, o as ShieldCheck, r as Users, s as Rocket, t as Zap, v as ChevronDown, y as Check } from "../_libs/lucide-react.mjs";
+import { t as clsx } from "../_libs/clsx.mjs";
+import { t as twMerge } from "../_libs/tailwind-merge.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-K4OIQC7c.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
+function cn(...inputs) {
+	return twMerge(clsx(inputs));
+}
+var Accordion = Root2;
+var AccordionItem = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Item, {
+	ref,
+	className: cn("border-b", className),
+	...props
+}));
+AccordionItem.displayName = "AccordionItem";
+var AccordionTrigger = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header, {
+	className: "flex",
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Trigger2, {
+		ref,
+		className: cn("flex flex-1 items-center justify-between py-4 text-sm font-medium cursor-pointer transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180", className),
+		...props,
+		children: [children, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" })]
+	})
+}));
+AccordionTrigger.displayName = Trigger2.displayName;
+var AccordionContent = import_react.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Content2, {
+	ref,
+	className: "overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+	...props,
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: cn("pb-4 pt-0", className),
+		children
+	})
+}));
+AccordionContent.displayName = Content2.displayName;
 function getTarget() {
 	if (typeof window === "undefined") return Date.now() + 3 * 864e5;
 	const key = "cs_launch_deadline";
@@ -71,6 +104,7 @@ var schema = objectType({
 	phone: stringType().trim().regex(/^[+0-9\s\-()]{7,20}$/, "Enter a valid phone number")
 });
 function RegisterModal({ open, onClose }) {
+	const router = useRouter();
 	const [form, setForm] = (0, import_react.useState)({
 		name: "",
 		email: "",
@@ -119,8 +153,8 @@ function RegisterModal({ open, onClose }) {
 			const paymentData = responseData.data || responseData;
 			if (!paymentData?.order_id) throw new Error("No order ID received from server");
 			if (!window.Razorpay) throw new Error("Razorpay checkout is unavailable right now");
-			const razorpayInstance = new window.Razorpay({
-				key: "rzp_test_T9joOT5vsUL5lv",
+			const options = {
+				key: "rzp_live_T9kro7NEYJGsxh",
 				amount: paymentData.amount,
 				currency: paymentData.currency || "INR",
 				order_id: paymentData.order_id,
@@ -163,12 +197,22 @@ function RegisterModal({ open, onClose }) {
 						if (!verifyRes.ok || verifyData?.success === false) throw new Error(verifyData?.message || verifyData?.error || "Payment verification failed");
 						setStatus("success");
 						setMessage(verifyData?.message || "Payment verified successfully");
+						setTimeout(() => {
+							const successUrl = `/payment-success?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&amount=${paymentData.amount}`;
+							router.navigate({ to: successUrl });
+						}, 1500);
 					} catch (err) {
 						setStatus("error");
 						setMessage(err instanceof Error ? err.message : "Something went wrong");
 					}
 				}
+			};
+			console.log({
+				key: "rzp_live_T9kro7NEYJGsxh",
+				order: paymentData,
+				options
 			});
+			const razorpayInstance = new window.Razorpay(options);
 			razorpayInstance.on("payment.failed", (response) => {
 				setStatus("error");
 				setMessage(response.error?.description || "Payment failed. Please try again.");
@@ -378,6 +422,122 @@ var faqs = [
 	{
 		q: "How is payment handled?",
 		a: "Payments are processed securely via Razorpay — UPI, Cards, Netbanking, and Wallets are supported."
+	}
+];
+var curriculumModules = [
+	{
+		id: "module-1",
+		number: "01",
+		title: "Foundations",
+		shortDesc: "Python basics, SQL syntax, Git, and terminal fundamentals",
+		topics: [
+			"Python Basics",
+			"Variables & Data Types",
+			"Control Flow (Loops & Conditionals)",
+			"Functions & Scope",
+			"Object-Oriented Programming",
+			"Git & GitHub Basics",
+			"Terminal & Command Line",
+			"SQL Fundamentals",
+			"Mini Project"
+		]
+	},
+	{
+		id: "module-2",
+		number: "02",
+		title: "Data Structures & Algorithms",
+		shortDesc: "Master DSA patterns with 200+ curated problems",
+		topics: [
+			"Arrays & Strings",
+			"Hash Maps & Sets",
+			"Linked Lists",
+			"Stacks & Queues",
+			"Trees (Binary, BST, Balanced)",
+			"Graphs & Traversals",
+			"Dynamic Programming",
+			"Greedy Algorithms",
+			"Binary Search & Optimization",
+			"Sliding Window Technique",
+			"200+ Curated Problems",
+			"Mock Coding Interviews"
+		]
+	},
+	{
+		id: "module-3",
+		number: "03",
+		title: "SQL for Analytics",
+		shortDesc: "Advanced queries, window functions, and FAANG interview problems",
+		topics: [
+			"SELECT Queries & Filters",
+			"GROUP BY & HAVING",
+			"JOINs (INNER, LEFT, RIGHT, FULL)",
+			"Window Functions (ROW_NUMBER, RANK, LAG, LEAD)",
+			"Common Table Expressions (CTEs)",
+			"Subqueries & Complex Joins",
+			"Stored Procedures",
+			"Query Optimization",
+			"Real FAANG Interview Questions",
+			"Tableau Introduction",
+			"Data Visualization Basics"
+		]
+	},
+	{
+		id: "module-4",
+		number: "04",
+		title: "Full-Stack Web Development",
+		shortDesc: "React, Node.js, MongoDB — build production-ready applications",
+		topics: [
+			"Frontend: HTML5 & CSS3",
+			"JavaScript ES6+ & DOM",
+			"React (Components, Hooks, State)",
+			"Tailwind CSS & Styling",
+			"State Management Patterns",
+			"Backend: Node.js & Express.js",
+			"MongoDB & Mongoose",
+			"RESTful APIs & HTTP",
+			"Authentication & JWT",
+			"Email Integration & Nodemailer",
+			"Razorpay Payment Integration",
+			"Deployment & Production Patterns"
+		]
+	},
+	{
+		id: "module-5",
+		number: "05",
+		title: "Real-World Projects",
+		shortDesc: "Build 6 full end-to-end production applications",
+		topics: [
+			"Project 1: Zerodha Clone (Stock Trading Platform)",
+			"Project 2: Airbnb Clone (Booking Platform)",
+			"Project 3: Zoom Clone (Video Conferencing with WebRTC)",
+			"Project 4: ChatGPT Clone (AI Chat Interface)",
+			"Project 5: School ERP (Enterprise Resource Planning)",
+			"Project 6: AI Resume Builder (ML + Web Integration)",
+			"Each with: Authentication, Payment Gateway, Admin Dashboard",
+			"Deployment to Production",
+			"Performance Optimization",
+			"Security Best Practices"
+		]
+	},
+	{
+		id: "module-6",
+		number: "06",
+		title: "Infrastructure & Interview Prep",
+		shortDesc: "Docker, Kubernetes, System Design, and interview mastery",
+		topics: [
+			"Docker Basics & Containerization",
+			"Kubernetes Essentials",
+			"AWS Fundamentals (EC2, S3, RDS)",
+			"CI/CD Pipelines & GitHub Actions",
+			"System Design Basics",
+			"Scaling & Performance",
+			"Resume Review & Optimization",
+			"LinkedIn Profile Building",
+			"Interview Communication Skills",
+			"HR Interview Preparation",
+			"Mock Technical Interviews (1:1)",
+			"Salary Negotiation Tips"
+		]
 	}
 ];
 function Index() {
@@ -775,69 +935,116 @@ function Index() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 				id: "curriculum",
 				className: "relative z-10 mx-auto max-w-7xl px-4 py-20",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					className: "mx-auto max-w-2xl text-center",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						className: "text-xs font-semibold uppercase tracking-widest text-primary",
-						children: "Curriculum"
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-						className: "mt-2 font-[Sora] text-3xl font-bold sm:text-4xl",
-						children: "A path from zero to job-ready"
-					})]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					className: "mx-auto mt-12 grid max-w-4xl gap-4",
-					children: [
-						{
-							n: "01",
-							t: "Foundations",
-							d: "SQL syntax, Python fundamentals, Git & GitHub, terminal basics."
-						},
-						{
-							n: "02",
-							t: "Data & Algorithms",
-							d: "Data structures in Python, algorithmic thinking, 200+ curated problems."
-						},
-						{
-							n: "03",
-							t: "SQL for Analytics",
-							d: "Advanced joins, window functions, FAANG interview problems, Tableau intro."
-						},
-						{
-							n: "04",
-							t: "Full-Stack Web Dev",
-							d: "React, Node, Express, MongoDB. Auth, deployments, and production patterns."
-						},
-						{
-							n: "05",
-							t: "Real-World Projects",
-							d: "Clone Zerodha, Airbnb, Zoom, ChatGPT — full end-to-end builds."
-						},
-						{
-							n: "06",
-							t: "Infra & Interview Prep",
-							d: "Docker, Kubernetes, AWS basics, WebRTC. Mock interviews & resume review."
-						}
-					].map((m) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						className: "glass grid grid-cols-[auto_1fr] items-start gap-4 rounded-2xl p-5 transition hover:border-primary/40 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-6",
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "mx-auto max-w-2xl text-center",
 						children: [
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "font-[Sora] text-2xl font-black gradient-text sm:text-3xl",
-								children: m.n
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "text-xs font-semibold uppercase tracking-widest text-primary",
+								children: "Curriculum"
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "min-w-0",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									className: "font-semibold text-foreground",
-									children: m.t
-								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									className: "mt-1 text-sm text-muted-foreground",
-									children: m.d
-								})]
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+								className: "mt-2 font-[Sora] text-3xl font-bold sm:text-4xl",
+								children: "A path from zero to job-ready"
 							}),
-							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { className: "hidden h-5 w-5 shrink-0 text-muted-foreground sm:block" })
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "mt-3 text-muted-foreground",
+								children: "Comprehensive, structured learning path covering everything from fundamentals to production deployment."
+							})
 						]
-					}, m.n))
-				})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						className: "mx-auto mt-12 max-w-4xl",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Accordion, {
+							type: "single",
+							collapsible: true,
+							defaultValue: "module-1",
+							className: "space-y-3",
+							children: curriculumModules.map((module) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
+								initial: {
+									opacity: 0,
+									y: 10
+								},
+								whileInView: {
+									opacity: 1,
+									y: 0
+								},
+								viewport: { once: true },
+								transition: { duration: .3 },
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AccordionItem, {
+									value: module.id,
+									className: "glass rounded-2xl border-0 overflow-hidden",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AccordionTrigger, {
+										className: "flex items-center justify-between px-6 py-5 hover:no-underline group",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "flex items-start gap-4 text-left",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												className: "font-[Sora] text-2xl font-black gradient-text sm:text-3xl shrink-0",
+												children: module.number
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "min-w-0",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+													className: "font-semibold text-foreground group-hover:text-primary transition-colors",
+													children: module.title
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+													className: "mt-1 text-sm text-muted-foreground",
+													children: module.shortDesc
+												})]
+											})]
+										})
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AccordionContent, {
+										className: "px-6 py-4 bg-white/[0.01] border-t border-white/5",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "space-y-4",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+												className: "text-sm text-muted-foreground",
+												children: [
+													"This module covers ",
+													module.topics.length,
+													" comprehensive topics:"
+												]
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "grid gap-2 sm:grid-cols-2",
+												children: module.topics.map((topic) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: "flex items-start gap-2 rounded-lg border border-white/5 bg-white/[0.02] p-2.5 transition hover:bg-white/[0.05]",
+													children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { className: "h-4 w-4 mt-0.5 shrink-0 text-primary" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+														className: "text-sm font-medium text-foreground",
+														children: topic
+													})]
+												}, topic))
+											})]
+										})
+									})]
+								})
+							}, module.id))
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8 text-center",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+							className: "text-foreground",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-semibold",
+									children: "100+ hours of video content"
+								}),
+								" • ",
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-semibold",
+									children: "500+ interview problems"
+								}),
+								" • ",
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "font-semibold",
+									children: "Lifetime access"
+								})
+							]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "mt-2 text-sm text-muted-foreground",
+							children: "All this at just ₹119 for the first 1000 students. Price increases after launch period."
+						})]
+					})
+				]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 				id: "instructor",

@@ -17,6 +17,7 @@ import {
   Database,
   Layers,
 } from "lucide-react";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import { RegisterModal } from "@/components/RegisterModal";
 import sqlCourse from "@/assets/course-sql.png";
@@ -120,6 +121,123 @@ const faqs = [
   {
     q: "How is payment handled?",
     a: "Payments are processed securely via Razorpay — UPI, Cards, Netbanking, and Wallets are supported.",
+  },
+];
+
+const curriculumModules = [
+  {
+    id: "module-1",
+    number: "01",
+    title: "Foundations",
+    shortDesc: "Python basics, SQL syntax, Git, and terminal fundamentals",
+    topics: [
+      "Python Basics",
+      "Variables & Data Types",
+      "Control Flow (Loops & Conditionals)",
+      "Functions & Scope",
+      "Object-Oriented Programming",
+      "Git & GitHub Basics",
+      "Terminal & Command Line",
+      "SQL Fundamentals",
+      "Mini Project",
+    ],
+  },
+  {
+    id: "module-2",
+    number: "02",
+    title: "Data Structures & Algorithms",
+    shortDesc: "Master DSA patterns with 200+ curated problems",
+    topics: [
+      "Arrays & Strings",
+      "Hash Maps & Sets",
+      "Linked Lists",
+      "Stacks & Queues",
+      "Trees (Binary, BST, Balanced)",
+      "Graphs & Traversals",
+      "Dynamic Programming",
+      "Greedy Algorithms",
+      "Binary Search & Optimization",
+      "Sliding Window Technique",
+      "200+ Curated Problems",
+      "Mock Coding Interviews",
+    ],
+  },
+  {
+    id: "module-3",
+    number: "03",
+    title: "SQL for Analytics",
+    shortDesc: "Advanced queries, window functions, and FAANG interview problems",
+    topics: [
+      "SELECT Queries & Filters",
+      "GROUP BY & HAVING",
+      "JOINs (INNER, LEFT, RIGHT, FULL)",
+      "Window Functions (ROW_NUMBER, RANK, LAG, LEAD)",
+      "Common Table Expressions (CTEs)",
+      "Subqueries & Complex Joins",
+      "Stored Procedures",
+      "Query Optimization",
+      "Real FAANG Interview Questions",
+      "Tableau Introduction",
+      "Data Visualization Basics",
+    ],
+  },
+  {
+    id: "module-4",
+    number: "04",
+    title: "Full-Stack Web Development",
+    shortDesc: "React, Node.js, MongoDB — build production-ready applications",
+    topics: [
+      "Frontend: HTML5 & CSS3",
+      "JavaScript ES6+ & DOM",
+      "React (Components, Hooks, State)",
+      "Tailwind CSS & Styling",
+      "State Management Patterns",
+      "Backend: Node.js & Express.js",
+      "MongoDB & Mongoose",
+      "RESTful APIs & HTTP",
+      "Authentication & JWT",
+      "Email Integration & Nodemailer",
+      "Razorpay Payment Integration",
+      "Deployment & Production Patterns",
+    ],
+  },
+  {
+    id: "module-5",
+    number: "05",
+    title: "Real-World Projects",
+    shortDesc: "Build 6 full end-to-end production applications",
+    topics: [
+      "Project 1: Zerodha Clone (Stock Trading Platform)",
+      "Project 2: Airbnb Clone (Booking Platform)",
+      "Project 3: Zoom Clone (Video Conferencing with WebRTC)",
+      "Project 4: ChatGPT Clone (AI Chat Interface)",
+      "Project 5: School ERP (Enterprise Resource Planning)",
+      "Project 6: AI Resume Builder (ML + Web Integration)",
+      "Each with: Authentication, Payment Gateway, Admin Dashboard",
+      "Deployment to Production",
+      "Performance Optimization",
+      "Security Best Practices",
+    ],
+  },
+  {
+    id: "module-6",
+    number: "06",
+    title: "Infrastructure & Interview Prep",
+    shortDesc: "Docker, Kubernetes, System Design, and interview mastery",
+    topics: [
+      "Docker Basics & Containerization",
+      "Kubernetes Essentials",
+      "AWS Fundamentals (EC2, S3, RDS)",
+      "CI/CD Pipelines & GitHub Actions",
+      "System Design Basics",
+      "Scaling & Performance",
+      "Resume Review & Optimization",
+      "LinkedIn Profile Building",
+      "Interview Communication Skills",
+      "HR Interview Preparation",
+      "Mock Technical Interviews (1:1)",
+      "Salary Negotiation Tips",
+    ],
   },
 ];
 
@@ -391,55 +509,66 @@ function Index() {
           <h2 className="mt-2 font-[Sora] text-3xl font-bold sm:text-4xl">
             A path from zero to job-ready
           </h2>
+          <p className="mt-3 text-muted-foreground">
+            Comprehensive, structured learning path covering everything from fundamentals to production deployment.
+          </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-4xl gap-4">
-          {[
-            {
-              n: "01",
-              t: "Foundations",
-              d: "SQL syntax, Python fundamentals, Git & GitHub, terminal basics.",
-            },
-            {
-              n: "02",
-              t: "Data & Algorithms",
-              d: "Data structures in Python, algorithmic thinking, 200+ curated problems.",
-            },
-            {
-              n: "03",
-              t: "SQL for Analytics",
-              d: "Advanced joins, window functions, FAANG interview problems, Tableau intro.",
-            },
-            {
-              n: "04",
-              t: "Full-Stack Web Dev",
-              d: "React, Node, Express, MongoDB. Auth, deployments, and production patterns.",
-            },
-            {
-              n: "05",
-              t: "Real-World Projects",
-              d: "Clone Zerodha, Airbnb, Zoom, ChatGPT — full end-to-end builds.",
-            },
-            {
-              n: "06",
-              t: "Infra & Interview Prep",
-              d: "Docker, Kubernetes, AWS basics, WebRTC. Mock interviews & resume review.",
-            },
-          ].map((m) => (
-            <div
-              key={m.n}
-              className="glass grid grid-cols-[auto_1fr] items-start gap-4 rounded-2xl p-5 transition hover:border-primary/40 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-6"
-            >
-              <span className="font-[Sora] text-2xl font-black gradient-text sm:text-3xl">
-                {m.n}
-              </span>
-              <div className="min-w-0">
-                <h3 className="font-semibold text-foreground">{m.t}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{m.d}</p>
-              </div>
-              <ChevronDown className="hidden h-5 w-5 shrink-0 text-muted-foreground sm:block" />
-            </div>
-          ))}
+        <div className="mx-auto mt-12 max-w-4xl">
+          <Accordion type="single" collapsible defaultValue="module-1" className="space-y-3">
+            {curriculumModules.map((module) => (
+              <motion.div
+                key={module.id}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3 }}
+              >
+                <AccordionItem value={module.id} className="glass rounded-2xl border-0 overflow-hidden">
+                  <AccordionTrigger className="flex items-center justify-between px-6 py-5 hover:no-underline group">
+                    <div className="flex items-start gap-4 text-left">
+                      <span className="font-[Sora] text-2xl font-black gradient-text sm:text-3xl shrink-0">
+                        {module.number}
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                          {module.title}
+                        </h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{module.shortDesc}</p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 py-4 bg-white/[0.01] border-t border-white/5">
+                    <div className="space-y-4">
+                      <p className="text-sm text-muted-foreground">
+                        This module covers {module.topics.length} comprehensive topics:
+                      </p>
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        {module.topics.map((topic) => (
+                          <div
+                            key={topic}
+                            className="flex items-start gap-2 rounded-lg border border-white/5 bg-white/[0.02] p-2.5 transition hover:bg-white/[0.05]"
+                          >
+                            <Check className="h-4 w-4 mt-0.5 shrink-0 text-primary" />
+                            <span className="text-sm font-medium text-foreground">{topic}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8 text-center">
+          <p className="text-foreground">
+            <span className="font-semibold">100+ hours of video content</span> • <span className="font-semibold">500+ interview problems</span> • <span className="font-semibold">Lifetime access</span>
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            All this at just ₹119 for the first 1000 students. Price increases after launch period.
+          </p>
         </div>
       </section>
 

@@ -182,6 +182,75 @@
   50% { box-shadow: 0 0 40px oklch(0.65 0.22 340 / 0.6); }
 }
 
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @utility animate-float {
   animation: float 4s ease-in-out infinite;
 }
@@ -189,3 +258,68 @@
 @utility animate-pulse-glow {
   animation: pulse-glow 2.5s ease-in-out infinite;
 }
+
+@utility animate-accordion-down {
+  animation: accordion-down 300ms ease-out;
+}
+
+@utility animate-accordion-up {
+  animation: accordion-up 300ms ease-out;
+}
+
+@utility animate-fade-in {
+  animation: fade-in 300ms ease-out;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 500ms ease-out;
+}
+
+@utility animate-slide-in-from-left {
+  animation: slide-in-from-left 400ms ease-out;
+}
+
+@utility animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+/* Ripple effect for buttons */
+@utility ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  border-radius: 50%;
+  transform: scale(1);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Smooth transitions */
+@layer components {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .transition-smooth-lg {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .glow-on-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/50;
+  }
+}
+

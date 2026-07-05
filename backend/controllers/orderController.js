@@ -43,6 +43,11 @@ export const createOrder = async (req, res) => {
       },
     });
 
+    console.log({
+      key: env.RAZORPAY_KEY_ID,
+      order,
+    });
+
     const registration = new Registration({
       name,
       email,

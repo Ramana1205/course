@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "@tanstack/react-router";
 import { z } from "zod";
 import { Loader2, X, CheckCircle2 } from "lucide-react";
 
@@ -25,6 +26,7 @@ declare global {
 }
 
 export function RegisterModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const router = useRouter();
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -89,7 +91,7 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
         throw new Error("Razorpay checkout is unavailable right now");
       }
 
-      const checkout = new window.Razorpay({
+      const options = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID || "",
         amount: paymentData.amount,
         currency: paymentData.currency || "INR",
@@ -145,13 +147,26 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
 
             setStatus("success");
             setMessage(verifyData?.message || "Payment verified successfully");
+
+            // Redirect to payment success page with payment details
+            setTimeout(() => {
+              const successUrl = `/payment-success?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&amount=${paymentData.amount}`;
+              router.navigate({ to: successUrl });
+            }, 1500);
           } catch (err) {
             setStatus("error");
             setMessage(err instanceof Error ? err.message : "Something went wrong");
           }
         },
+      };
+
+      console.log({
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        order: paymentData,
+        options,
       });
 
+      const checkout = new window.Razorpay(options);
       const razorpayInstance = checkout as unknown as RazorpayCheckoutInstance & {
         on: (event: string, handler: (response: Record<string, unknown>) => void) => void;
       };

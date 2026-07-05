@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-DvJOlstG.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CyDNRTNq.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
 		filePath: "C:/courseproject/frontend/src/routes/__root.tsx",
@@ -9,22 +9,22 @@ var tsrStartManifest = () => ({ routes: {
 			"/api/verify-payment",
 			"/payment/success"
 		],
-		preloads: ["/assets/index-IluZ55Wc.js"],
+		preloads: ["/assets/index-D8ZXJexq.js"],
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-IluZ55Wc.js"
+			src: "/assets/index-D8ZXJexq.js"
 		} }]
 	},
 	"/": {
 		filePath: "C:/courseproject/frontend/src/routes/index.tsx",
 		children: void 0,
-		preloads: ["/assets/routes-C1LU_aWA.js"]
+		preloads: ["/assets/routes-aub1tIdj.js", "/assets/circle-check-DoPfVlnO.js"]
 	},
 	"/payment/success": {
 		filePath: "C:/courseproject/frontend/src/routes/payment/success.tsx",
 		children: void 0,
-		preloads: ["/assets/success-BfMxiHYj.js"]
+		preloads: ["/assets/success-C72-XLyn.js", "/assets/circle-check-DoPfVlnO.js"]
 	}
 } });
 //#endregion
