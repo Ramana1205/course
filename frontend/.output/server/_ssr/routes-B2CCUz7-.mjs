@@ -6,7 +6,7 @@ import { t as motion } from "../_libs/motion.mjs";
 import { _ as CircleCheck, a as Sparkles, b as Award, c as Play, d as LoaderCircle, f as Layers, g as Clock, h as CodeXml, i as Star, m as Database, n as X, o as ShieldCheck, r as Users, s as Rocket, t as Zap, v as ChevronDown, y as Check } from "../_libs/lucide-react.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-K4OIQC7c.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-B2CCUz7-.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -40,18 +40,19 @@ var AccordionContent = import_react.forwardRef(({ className, children, ...props 
 }));
 AccordionContent.displayName = Content2.displayName;
 function getTarget() {
-	if (typeof window === "undefined") return Date.now() + 3 * 864e5;
 	const key = "cs_launch_deadline";
-	const existing = window.localStorage.getItem(key);
+	const existing = typeof window !== "undefined" ? window.localStorage.getItem(key) : null;
 	if (existing) return parseInt(existing, 10);
 	const t = Date.now() + 3 * 864e5 + 7 * 36e5 + 42 * 6e4;
-	window.localStorage.setItem(key, String(t));
+	if (typeof window !== "undefined") window.localStorage.setItem(key, String(t));
 	return t;
 }
 function CountdownTimer() {
 	const [target] = (0, import_react.useState)(() => getTarget());
 	const [now, setNow] = (0, import_react.useState)(() => Date.now());
+	const [mounted, setMounted] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
+		setMounted(true);
 		const id = setInterval(() => setNow(Date.now()), 1e3);
 		return () => clearInterval(id);
 	}, []);

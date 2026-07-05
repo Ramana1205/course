@@ -5,7 +5,7 @@ import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { n as objectType, r as stringType, t as numberType } from "../_libs/zod.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-DcF77XsP.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-BBcyielR.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var styles_default = "/assets/styles-BIVZQsla.css";
@@ -170,7 +170,7 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
 	});
 }
-var $$splitComponentImporter$1 = () => import("./routes-K4OIQC7c.mjs");
+var $$splitComponentImporter$1 = () => import("./routes-B2CCUz7-.mjs");
 var Route$4 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
 var $$splitComponentImporter = () => import("./success-Bwh7WhBB.mjs");
 var Route$3 = createFileRoute("/payment/success")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
