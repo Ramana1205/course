@@ -2,15 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 
 const schema = z.object({
-  name: z.string().trim().min(2).max(80),
-  email: z.string().trim().email().max(160),
-  phone: z.string().trim().min(7).max(20),
-  amount: z.number().int().min(100).optional(),
-  currency: z.string().trim().max(10).optional(),
-  receipt: z.string().trim().max(40).optional(),
+  order_id: z.string().trim().min(1).optional(),
+  payment_id: z.string().trim().min(1).optional(),
+  signature: z.string().trim().min(1).optional(),
+  razorpay_order_id: z.string().trim().min(1).optional(),
+  razorpay_payment_id: z.string().trim().min(1).optional(),
+  razorpay_signature: z.string().trim().min(1).optional(),
 });
 
-export const Route = createFileRoute("/api/create-order")({
+export const Route = createFileRoute("/api/verify-payment")({
   server: {
     handlers: {
       OPTIONS: async () => {
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/api/create-order")({
           }
 
           const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
-          const response = await fetch(`${backendUrl}/api/create-order`, {
+          const response = await fetch(`${backendUrl}/api/verify-payment`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(parsed.data),
@@ -54,21 +54,13 @@ export const Route = createFileRoute("/api/create-order")({
           if (!response.ok) {
             return new Response(
               JSON.stringify({
-                error: data?.message || data?.error || `Failed to create payment link (${response.status})`,
+                error: data?.message || data?.error || `Failed to verify payment (${response.status})`,
               }),
               { status: response.status, headers: { "Content-Type": "application/json" } },
             );
           }
 
-          const paymentLinkData = data?.data || data;
-          if (!paymentLinkData) {
-            return new Response(
-              JSON.stringify({ error: "No payment data returned from backend" }),
-              { status: 502, headers: { "Content-Type": "application/json" } },
-            );
-          }
-
-          return new Response(JSON.stringify(paymentLinkData), {
+          return new Response(JSON.stringify(data || { success: true }), {
             status: 200,
             headers: { "Content-Type": "application/json" },
           });

@@ -13,9 +13,14 @@ const schema = z.object({
 
 type Errors = Partial<Record<keyof z.infer<typeof schema>, string>>;
 
+type RazorpayCheckoutInstance = {
+  open: () => void;
+  on: (event: string, handler: (response: Record<string, unknown>) => void) => void;
+};
+
 declare global {
   interface Window {
-    Razorpay?: new (opts: Record<string, unknown>) => { open: () => void };
+    Razorpay?: new (opts: Record<string, unknown>) => RazorpayCheckoutInstance;
   }
 }
 
@@ -39,14 +44,16 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
       setErrors(fieldErrors);
       return;
     }
+
     setErrors({});
     setStatus("submitting");
     setMessage(null);
+
     try {
       const res = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
+        body: JSON.stringify({ ...parsed.data, amount: 11900, currency: "INR", receipt: `codesprint-${Date.now()}` }),
       });
 
       const text = await res.text();
@@ -74,18 +81,89 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
       }
 
       const paymentData = responseData.data || responseData;
-
-      // Redirect to Razorpay payment link
-      if (paymentData?.short_url) {
-        window.location.href = paymentData.short_url;
-      } else if (paymentData?.url) {
-        window.location.href = paymentData.url;
-      } else {
-        throw new Error("No payment URL received from server");
+      if (!paymentData?.order_id) {
+        throw new Error("No order ID received from server");
       }
 
-      setStatus("success");
-      setMessage("Redirecting to payment gateway...");
+      if (!window.Razorpay) {
+        throw new Error("Razorpay checkout is unavailable right now");
+      }
+
+      const checkout = new window.Razorpay({
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || "",
+        amount: paymentData.amount,
+        currency: paymentData.currency || "INR",
+        order_id: paymentData.order_id,
+        name: "CodeSprint",
+        description: "3 Premium Courses — Launch Offer",
+        prefill: {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          contact: parsed.data.phone,
+        },
+        notes: {
+          email: parsed.data.email,
+          phone: parsed.data.phone,
+        },
+        theme: {
+          color: "#7c3aed",
+        },
+        modal: {
+          ondismiss: () => {
+            setStatus("idle");
+            setMessage("Payment cancelled. You can try again anytime.");
+          },
+        },
+        handler: async (response: { razorpay_payment_id?: string; razorpay_order_id?: string; razorpay_signature?: string }) => {
+          try {
+            setStatus("submitting");
+            setMessage("Verifying your payment...");
+
+            const verifyRes = await fetch("/api/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                order_id: response.razorpay_order_id,
+                payment_id: response.razorpay_payment_id,
+                signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyText = await verifyRes.text();
+            let verifyData: any = null;
+            if (verifyText) {
+              try {
+                verifyData = JSON.parse(verifyText);
+              } catch {
+                verifyData = null;
+              }
+            }
+
+            if (!verifyRes.ok || verifyData?.success === false) {
+              throw new Error(verifyData?.message || verifyData?.error || "Payment verification failed");
+            }
+
+            setStatus("success");
+            setMessage(verifyData?.message || "Payment verified successfully");
+          } catch (err) {
+            setStatus("error");
+            setMessage(err instanceof Error ? err.message : "Something went wrong");
+          }
+        },
+      });
+
+      const razorpayInstance = checkout as unknown as RazorpayCheckoutInstance & {
+        on: (event: string, handler: (response: Record<string, unknown>) => void) => void;
+      };
+      razorpayInstance.on("payment.failed", (response: Record<string, unknown>) => {
+        setStatus("error");
+        setMessage(
+          (response.error as { description?: string } | undefined)?.description ||
+            "Payment failed. Please try again.",
+        );
+      });
+      razorpayInstance.open();
+      setMessage("Please complete the payment in the popup.");
     } catch (err) {
       setStatus("error");
       setMessage(err instanceof Error ? err.message : "Something went wrong");

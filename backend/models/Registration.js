@@ -30,23 +30,29 @@ const registrationSchema = new mongoose.Schema(
     },
     paymentLinkId: {
       type: String,
-      required: true,
+      sparse: true,
       unique: true,
     },
     paymentLinkUrl: {
       type: String,
-      required: true,
+      default: "",
     },
     shortUrl: {
       type: String,
-      required: true,
+      default: "",
     },
     status: {
       type: String,
       enum: ["pending", "paid", "failed"],
       default: "pending",
     },
+    razorpayOrderId: {
+      type: String,
+      sparse: true,
+      unique: true,
+    },
     razorpayPaymentId: String,
+    razorpaySignature: String,
     paymentLinkReferenceId: String,
     razorpayPaymentLinkStatus: String,
     description: {

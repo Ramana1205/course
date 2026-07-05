@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PaymentSuccessRouteImport } from './routes/payment/success'
+import { Route as ApiVerifyPaymentRouteImport } from './routes/api/verify-payment'
 import { Route as ApiCreateOrderRouteImport } from './routes/api/create-order'
 import { Route as ApiConfirmRegistrationRouteImport } from './routes/api/confirm-registration'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
   id: '/payment/success',
   path: '/payment/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVerifyPaymentRoute = ApiVerifyPaymentRouteImport.update({
+  id: '/api/verify-payment',
+  path: '/api/verify-payment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCreateOrderRoute = ApiCreateOrderRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/confirm-registration': typeof ApiConfirmRegistrationRoute
   '/api/create-order': typeof ApiCreateOrderRoute
+  '/api/verify-payment': typeof ApiVerifyPaymentRoute
   '/payment/success': typeof PaymentSuccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/confirm-registration': typeof ApiConfirmRegistrationRoute
   '/api/create-order': typeof ApiCreateOrderRoute
+  '/api/verify-payment': typeof ApiVerifyPaymentRoute
   '/payment/success': typeof PaymentSuccessRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,30 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/api/confirm-registration': typeof ApiConfirmRegistrationRoute
   '/api/create-order': typeof ApiCreateOrderRoute
+  '/api/verify-payment': typeof ApiVerifyPaymentRoute
   '/payment/success': typeof PaymentSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/api/confirm-registration' | '/api/create-order' | '/payment/success'
+    | '/'
+    | '/api/confirm-registration'
+    | '/api/create-order'
+    | '/api/verify-payment'
+    | '/payment/success'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/api/confirm-registration' | '/api/create-order' | '/payment/success'
+    | '/'
+    | '/api/confirm-registration'
+    | '/api/create-order'
+    | '/api/verify-payment'
+    | '/payment/success'
   id:
     | '__root__'
     | '/'
     | '/api/confirm-registration'
     | '/api/create-order'
+    | '/api/verify-payment'
     | '/payment/success'
   fileRoutesById: FileRoutesById
 }
@@ -73,6 +91,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiConfirmRegistrationRoute: typeof ApiConfirmRegistrationRoute
   ApiCreateOrderRoute: typeof ApiCreateOrderRoute
+  ApiVerifyPaymentRoute: typeof ApiVerifyPaymentRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
 }
 
@@ -90,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/payment/success'
       fullPath: '/payment/success'
       preLoaderRoute: typeof PaymentSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/verify-payment': {
+      id: '/api/verify-payment'
+      path: '/api/verify-payment'
+      fullPath: '/api/verify-payment'
+      preLoaderRoute: typeof ApiVerifyPaymentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/create-order': {
@@ -113,6 +139,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiConfirmRegistrationRoute: ApiConfirmRegistrationRoute,
   ApiCreateOrderRoute: ApiCreateOrderRoute,
+  ApiVerifyPaymentRoute: ApiVerifyPaymentRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
 }
 export const routeTree = rootRouteImport
