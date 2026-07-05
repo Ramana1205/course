@@ -32,7 +32,7 @@ export const Route = createFileRoute("/api/create-order")({
           }
 
           // Forward the request to the backend
-          const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+          const backendUrl = process.env.BACKEND_URL;
           const response = await fetch(`${backendUrl}/api/create-order`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

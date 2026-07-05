@@ -22,7 +22,7 @@ export const Route = createFileRoute("/api/confirm-registration")({
             );
           }
 
-          const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+          const backendUrl =process.env.BACKEND_URL;
           const response = await fetch(`${backendUrl}/api/confirm-registration`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
