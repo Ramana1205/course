@@ -2,24 +2,28 @@ import { useEffect, useState } from "react";
 
 function getTarget() {
   // 3 days from first mount, persisted in localStorage
-  if (typeof window === "undefined") return Date.now() + 3 * 86400_000;
   const key = "cs_launch_deadline";
-  const existing = window.localStorage.getItem(key);
+  const existing = typeof window !== "undefined" ? window.localStorage.getItem(key) : null;
   if (existing) return parseInt(existing, 10);
   const t = Date.now() + 3 * 86400_000 + 7 * 3600_000 + 42 * 60_000;
-  window.localStorage.setItem(key, String(t));
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem(key, String(t));
+  }
   return t;
 }
 
 export function CountdownTimer() {
   const [target] = useState(() => getTarget());
   const [now, setNow] = useState(() => Date.now());
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
+  // Use target for calculation to match server-rendered value
   const diff = Math.max(0, target - now);
   const days = Math.floor(diff / 86400_000);
   const hours = Math.floor((diff / 3600_000) % 24);
