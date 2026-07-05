@@ -150,8 +150,17 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
 
             // Redirect to payment success page with payment details
             setTimeout(() => {
-              const successUrl = `/payment-success?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&amount=${paymentData.amount}`;
-              router.navigate({ to: successUrl });
+              router.navigate({
+                to: "/payment/success",
+                search: {
+                  order_id: response.razorpay_order_id,
+                  payment_id: response.razorpay_payment_id,
+                  amount: paymentData.amount.toString(),
+                  name: parsed.data.name,
+                  email: parsed.data.email,
+                  phone: parsed.data.phone,
+                },
+              });
             }, 1500);
           } catch (err) {
             setStatus("error");

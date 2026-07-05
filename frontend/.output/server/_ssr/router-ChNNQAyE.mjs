@@ -5,10 +5,10 @@ import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
 import { n as objectType, r as stringType, t as numberType } from "../_libs/zod.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-BBcyielR.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-ChNNQAyE.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-BIVZQsla.css";
+var styles_default = "/assets/styles-DJtcVV3i.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -170,9 +170,9 @@ function RootComponent() {
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
 	});
 }
-var $$splitComponentImporter$1 = () => import("./routes-B2CCUz7-.mjs");
+var $$splitComponentImporter$1 = () => import("./routes-GbcZnV04.mjs");
 var Route$4 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
-var $$splitComponentImporter = () => import("./success-Bwh7WhBB.mjs");
+var $$splitComponentImporter = () => import("./success-BoOpATEO.mjs");
 var Route$3 = createFileRoute("/payment/success")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
 var schema$2 = objectType({
 	order_id: stringType().trim().min(1).optional(),

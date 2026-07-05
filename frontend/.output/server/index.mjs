@@ -15,33 +15,12 @@ globalThis.__nitro_vite_envs__ = services;
 //#endregion
 //#region #nitro/virtual/public-assets-data
 var public_assets_data_default = {
-	"/assets/circle-check-Ba3qMbKm.js": {
-		"type": "text/javascript; charset=utf-8",
-		"etag": "\"51d-bnvLv5PO50lC8VEkLdlelZ504pk\"",
-		"mtime": "2026-07-05T09:21:44.631Z",
-		"size": 1309,
-		"path": "../public/assets/circle-check-Ba3qMbKm.js"
-	},
-	"/assets/course-python-CTfxH0_y.png": {
-		"type": "image/png",
-		"etag": "\"397ee-jk4IaBmAZ78GSAizmMY+SSbxRgY\"",
-		"mtime": "2026-07-05T09:21:44.634Z",
-		"size": 235502,
-		"path": "../public/assets/course-python-CTfxH0_y.png"
-	},
 	"/favicon.svg": {
 		"type": "image/svg+xml",
 		"etag": "\"2532-P1u486agW3ymimJYHS3VvIiBLK8\"",
 		"mtime": "2026-07-03T13:22:39.702Z",
 		"size": 9522,
 		"path": "../public/favicon.svg"
-	},
-	"/assets/course-sigma-BO5Y9Zcl.png": {
-		"type": "image/png",
-		"etag": "\"1e7b7-xJ4u/DOe46ryveVS/pRQU0q4ZQo\"",
-		"mtime": "2026-07-05T09:21:44.635Z",
-		"size": 124855,
-		"path": "../public/assets/course-sigma-BO5Y9Zcl.png"
 	},
 	"/icons.svg": {
 		"type": "image/svg+xml",
@@ -50,40 +29,61 @@ var public_assets_data_default = {
 		"size": 5031,
 		"path": "../public/icons.svg"
 	},
-	"/assets/routes-B65Utd8-.js": {
+	"/assets/circle-check-XOzC5LfZ.js": {
 		"type": "text/javascript; charset=utf-8",
-		"etag": "\"3e3b0-IrbFqVJSdZQLjxzZa9bkIFrPn2E\"",
-		"mtime": "2026-07-05T09:21:44.632Z",
-		"size": 254896,
-		"path": "../public/assets/routes-B65Utd8-.js"
+		"etag": "\"51d-sdK7KcYiEA1f37e5Fd1MCmRpxQ0\"",
+		"mtime": "2026-07-05T09:38:31.597Z",
+		"size": 1309,
+		"path": "../public/assets/circle-check-XOzC5LfZ.js"
 	},
-	"/assets/success-CDkmjiKu.js": {
-		"type": "text/javascript; charset=utf-8",
-		"etag": "\"1f61-DEYXKdv99EhIaFsSWtLIqRrD9kw\"",
-		"mtime": "2026-07-05T09:21:44.632Z",
-		"size": 8033,
-		"path": "../public/assets/success-CDkmjiKu.js"
-	},
-	"/assets/index-Dxh_0Zgt.js": {
-		"type": "text/javascript; charset=utf-8",
-		"etag": "\"5444d-f5kGeX/RSJjllFC1+CtA8R00mks\"",
-		"mtime": "2026-07-05T09:21:44.630Z",
-		"size": 345165,
-		"path": "../public/assets/index-Dxh_0Zgt.js"
-	},
-	"/assets/styles-BIVZQsla.css": {
-		"type": "text/css; charset=utf-8",
-		"etag": "\"181d0-AmzseuVIJlkJu5JxDnCUTDtNxc0\"",
-		"mtime": "2026-07-05T09:21:44.636Z",
-		"size": 98768,
-		"path": "../public/assets/styles-BIVZQsla.css"
+	"/assets/course-sigma-BO5Y9Zcl.png": {
+		"type": "image/png",
+		"etag": "\"1e7b7-xJ4u/DOe46ryveVS/pRQU0q4ZQo\"",
+		"mtime": "2026-07-05T09:38:31.601Z",
+		"size": 124855,
+		"path": "../public/assets/course-sigma-BO5Y9Zcl.png"
 	},
 	"/assets/course-sql-CB2uE1bw.png": {
 		"type": "image/png",
 		"etag": "\"4dca8-cs8JfqQDm41S7G3hSI9IcPKWhJM\"",
-		"mtime": "2026-07-05T09:21:44.636Z",
+		"mtime": "2026-07-05T09:38:31.603Z",
 		"size": 318632,
 		"path": "../public/assets/course-sql-CB2uE1bw.png"
+	},
+	"/assets/styles-DJtcVV3i.css": {
+		"type": "text/css; charset=utf-8",
+		"etag": "\"182af-k+CPwO7Gd0sn22TDfqBQKve/djY\"",
+		"mtime": "2026-07-05T09:38:31.604Z",
+		"size": 98991,
+		"path": "../public/assets/styles-DJtcVV3i.css"
+	},
+	"/assets/success-BLZ05yXA.js": {
+		"type": "text/javascript; charset=utf-8",
+		"etag": "\"2559-0LTOLMvUgpzchpDR5RhOakuhMmQ\"",
+		"mtime": "2026-07-05T09:38:31.599Z",
+		"size": 9561,
+		"path": "../public/assets/success-BLZ05yXA.js"
+	},
+	"/assets/routes-CMvcPEiq.js": {
+		"type": "text/javascript; charset=utf-8",
+		"etag": "\"3e3ea-F6ASHoiip0cSnRx5h1fLoE/uQPw\"",
+		"mtime": "2026-07-05T09:38:31.598Z",
+		"size": 254954,
+		"path": "../public/assets/routes-CMvcPEiq.js"
+	},
+	"/assets/course-python-CTfxH0_y.png": {
+		"type": "image/png",
+		"etag": "\"397ee-jk4IaBmAZ78GSAizmMY+SSbxRgY\"",
+		"mtime": "2026-07-05T09:38:31.600Z",
+		"size": 235502,
+		"path": "../public/assets/course-python-CTfxH0_y.png"
+	},
+	"/assets/index-5c27tPFY.js": {
+		"type": "text/javascript; charset=utf-8",
+		"etag": "\"5444d-kG1ociYz4i38VEdb/DpYOgHw86Q\"",
+		"mtime": "2026-07-05T09:38:31.595Z",
+		"size": 345165,
+		"path": "../public/assets/index-5c27tPFY.js"
 	}
 };
 //#endregion

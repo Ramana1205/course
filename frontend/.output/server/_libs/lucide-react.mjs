@@ -115,6 +115,19 @@ var createLucideIcon = (iconName, iconNode) => {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var ArrowLeft = createLucideIcon("arrow-left", [["path", {
+	d: "m12 19-7-7 7-7",
+	key: "1l729n"
+}], ["path", {
+	d: "M19 12H5",
+	key: "x3x0zl"
+}]]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Award = createLucideIcon("award", [["path", {
 	d: "m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526",
 	key: "1yiouv"
@@ -420,4 +433,4 @@ var Zap = createLucideIcon("zap", [["path", {
 	key: "1xq2db"
 }]]);
 //#endregion
-export { CircleCheck as _, Sparkles as a, Award as b, Play as c, LoaderCircle as d, Layers as f, Clock as g, CodeXml as h, Star as i, MessageCircle as l, Database as m, X as n, ShieldCheck as o, House as p, Users as r, Rocket as s, Zap as t, Mail as u, ChevronDown as v, Check as y };
+export { CircleCheck as _, Sparkles as a, Award as b, Play as c, LoaderCircle as d, Layers as f, Clock as g, CodeXml as h, Star as i, MessageCircle as l, Database as m, X as n, ShieldCheck as o, House as p, Users as r, Rocket as s, Zap as t, Mail as u, ChevronDown as v, ArrowLeft as x, Check as y };
