@@ -1,14 +1,15 @@
 import { a as __toESM } from "../_runtime.mjs";
 import { c as require_react, s as require_jsx_runtime } from "../_libs/@radix-ui/react-accordion+[...].mjs";
 import { c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useRouter, h as Link, m as createRootRouteWithContext, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
+import { n as objectType, r as stringType, t as numberType } from "../_libs/zod.mjs";
+import { t as Route$5 } from "./success-DTXR6Not.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
-import { n as objectType, r as stringType, t as numberType } from "../_libs/zod.mjs";
 import processModule from "node:process";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-ChNNQAyE.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-5gyHa3i-.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-DJtcVV3i.css";
+var styles_default = "/assets/styles-BTY_17EN.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -89,7 +90,7 @@ function ErrorComponent({ error, reset }) {
 		})
 	});
 }
-var Route$5 = createRootRouteWithContext()({
+var Route$4 = createRootRouteWithContext()({
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },
@@ -164,16 +165,14 @@ function RootShell({ children }) {
 	});
 }
 function RootComponent() {
-	const { queryClient } = Route$5.useRouteContext();
+	const { queryClient } = Route$4.useRouteContext();
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(QueryClientProvider, {
 		client: queryClient,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Outlet, {})
 	});
 }
-var $$splitComponentImporter$1 = () => import("./routes-GbcZnV04.mjs");
-var Route$4 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter$1, "component") });
-var $$splitComponentImporter = () => import("./success-BoOpATEO.mjs");
-var Route$3 = createFileRoute("/payment/success")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
+var $$splitComponentImporter = () => import("./routes-BqItXSS-.mjs");
+var Route$3 = createFileRoute("/")({ component: lazyRouteComponent($$splitComponentImporter, "component") });
 var schema$2 = objectType({
 	order_id: stringType().trim().min(1).optional(),
 	payment_id: stringType().trim().min(1).optional(),
@@ -338,38 +337,38 @@ var Route = createFileRoute("/api/confirm-registration")({ server: { handlers: {
 		});
 	}
 } } } });
-var IndexRoute = Route$4.update({
+var IndexRoute = Route$3.update({
 	id: "/",
 	path: "/",
-	getParentRoute: () => Route$5
+	getParentRoute: () => Route$4
 });
-var PaymentSuccessRoute = Route$3.update({
+var PaymentSuccessRoute = Route$5.update({
 	id: "/payment/success",
 	path: "/payment/success",
-	getParentRoute: () => Route$5
+	getParentRoute: () => Route$4
 });
 var ApiVerifyPaymentRoute = Route$2.update({
 	id: "/api/verify-payment",
 	path: "/api/verify-payment",
-	getParentRoute: () => Route$5
+	getParentRoute: () => Route$4
 });
 var ApiCreateOrderRoute = Route$1.update({
 	id: "/api/create-order",
 	path: "/api/create-order",
-	getParentRoute: () => Route$5
+	getParentRoute: () => Route$4
 });
 var rootRouteChildren = {
 	IndexRoute,
 	ApiConfirmRegistrationRoute: Route.update({
 		id: "/api/confirm-registration",
 		path: "/api/confirm-registration",
-		getParentRoute: () => Route$5
+		getParentRoute: () => Route$4
 	}),
 	ApiCreateOrderRoute,
 	ApiVerifyPaymentRoute,
 	PaymentSuccessRoute
 };
-var routeTree = Route$5._addFileChildren(rootRouteChildren)._addFileTypes();
+var routeTree = Route$4._addFileChildren(rootRouteChildren)._addFileTypes();
 var getRouter = () => {
 	return createRouter({
 		routeTree,

@@ -6,7 +6,7 @@ import { t as motion } from "../_libs/motion.mjs";
 import { _ as CircleCheck, a as Sparkles, b as Award, c as Play, d as LoaderCircle, f as Layers, g as Clock, h as CodeXml, i as Star, m as Database, n as X, o as ShieldCheck, r as Users, s as Rocket, t as Zap, v as ChevronDown, y as Check } from "../_libs/lucide-react.mjs";
 import { t as clsx } from "../_libs/clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-GbcZnV04.js
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-BqItXSS-.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 function cn(...inputs) {
@@ -49,14 +49,15 @@ function getTarget() {
 }
 function CountdownTimer() {
 	const [target] = (0, import_react.useState)(() => getTarget());
-	const [now, setNow] = (0, import_react.useState)(() => Date.now());
+	const [now, setNow] = (0, import_react.useState)(null);
 	const [mounted, setMounted] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
 		setMounted(true);
+		setNow(Date.now());
 		const id = setInterval(() => setNow(Date.now()), 1e3);
 		return () => clearInterval(id);
 	}, []);
-	const diff = Math.max(0, target - now);
+	const diff = mounted && now !== null ? Math.max(0, target - now) : 0;
 	const days = Math.floor(diff / 864e5);
 	const hours = Math.floor(diff / 36e5 % 24);
 	const minutes = Math.floor(diff / 6e4 % 60);
@@ -198,19 +199,17 @@ function RegisterModal({ open, onClose }) {
 						if (!verifyRes.ok || verifyData?.success === false) throw new Error(verifyData?.message || verifyData?.error || "Payment verification failed");
 						setStatus("success");
 						setMessage(verifyData?.message || "Payment verified successfully");
-						setTimeout(() => {
-							router.navigate({
-								to: "/payment/success",
-								search: {
-									order_id: response.razorpay_order_id,
-									payment_id: response.razorpay_payment_id,
-									amount: paymentData.amount.toString(),
-									name: parsed.data.name,
-									email: parsed.data.email,
-									phone: parsed.data.phone
-								}
-							});
-						}, 1500);
+						router.navigate({
+							to: "/payment/success",
+							search: {
+								order_id: response.razorpay_order_id,
+								payment_id: response.razorpay_payment_id,
+								amount: paymentData.amount.toString(),
+								name: parsed.data.name,
+								email: parsed.data.email,
+								phone: parsed.data.phone
+							}
+						});
 					} catch (err) {
 						setStatus("error");
 						setMessage(err instanceof Error ? err.message : "Something went wrong");

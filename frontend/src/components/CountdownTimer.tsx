@@ -14,17 +14,17 @@ function getTarget() {
 
 export function CountdownTimer() {
   const [target] = useState(() => getTarget());
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
 
-  // Use target for calculation to match server-rendered value
-  const diff = Math.max(0, target - now);
+  const diff = mounted && now !== null ? Math.max(0, target - now) : 0;
   const days = Math.floor(diff / 86400_000);
   const hours = Math.floor((diff / 3600_000) % 24);
   const minutes = Math.floor((diff / 60_000) % 60);

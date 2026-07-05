@@ -1,17 +1,33 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CheckCircle2, Mail, MessageCircle, Home, ArrowLeft } from "lucide-react";
+import { z } from "zod";
 
 // WhatsApp support number
-const WHATSAPP_NUMBER = "919876543210"; // Replace with your WhatsApp number
+const WHATSAPP_NUMBER = "919848792438"; // Replace with your WhatsApp number
+
+const paymentSuccessSearchSchema = z.object({
+  order_id: z.string().trim().min(1).optional(),
+  payment_id: z.string().trim().min(1).optional(),
+  amount: z.string().trim().min(1).optional(),
+  name: z.string().trim().min(1).optional(),
+  email: z.string().trim().min(1).optional(),
+  phone: z.string().trim().min(1).optional(),
+});
+
+type PaymentSuccessSearch = z.infer<typeof paymentSuccessSearchSchema>;
 
 export const Route = createFileRoute("/payment/success")({
+  validateSearch: (search: Record<string, unknown>): PaymentSuccessSearch =>
+    paymentSuccessSearchSchema.parse(search),
   component: PaymentSuccess,
 });
 
 function PaymentSuccess() {
   const router = useRouter();
+  const search = Route.useSearch();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const [details, setDetails] = useState<Record<string, string | number | undefined>>({
     name: undefined,
     email: undefined,
@@ -23,32 +39,30 @@ function PaymentSuccess() {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    // Trigger animation after component mount
-    setTimeout(() => setIsAnimating(true), 100);
+    setIsMounted(true);
 
-    // Read all data from URL search params (no API call needed - verification already done in RegisterModal)
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get("order_id");
-    const paymentId = urlParams.get("payment_id");
-    const amount = urlParams.get("amount");
-    const name = urlParams.get("name");
-    const email = urlParams.get("email");
-    const phone = urlParams.get("phone");
+    const timeoutId = window.setTimeout(() => setIsAnimating(true), 100);
 
-    // Check if required fields are present
+    const orderId = search.order_id;
+    const paymentId = search.payment_id;
+    const amount = search.amount;
+    const name = search.name;
+    const email = search.email;
+    const phone = search.phone;
+
     if (!orderId || !paymentId || !amount) {
       setHasError(true);
-      return;
+      return () => window.clearTimeout(timeoutId);
     }
 
-    // Populate details from URL params
+    setHasError(false);
     setDetails({
       name: name || "Valued Customer",
       email: email || "-",
       phone: phone || "-",
       paymentId: paymentId,
       orderId: orderId,
-      amount: amount ? `₹${parseInt(amount) / 100}` : "₹119",
+      amount: amount ? `₹${parseInt(amount, 10) / 100}` : "₹119",
       timestamp: new Date().toLocaleString("en-IN", {
         year: "numeric",
         month: "long",
@@ -57,7 +71,9 @@ function PaymentSuccess() {
         minute: "2-digit",
       }),
     });
-  }, []);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [search.order_id, search.payment_id, search.amount, search.name, search.email, search.phone]);
 
   const handleBackHome = () => {
     router.navigate({ to: "/" });
@@ -67,13 +83,41 @@ function PaymentSuccess() {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}`, "_blank");
   };
 
-  // Show error state if payment information is missing
+  if (!isMounted) {
+    return (
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+        </div>
+
+        <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
+          <div className="w-full max-w-2xl">
+            <div className="glass rounded-3xl p-8 shadow-2xl sm:p-12">
+              <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-primary/10">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+              </div>
+
+              <h1 className="text-center font-[Sora] text-4xl font-bold text-foreground sm:text-5xl">
+                Preparing your payment receipt
+              </h1>
+
+              <p className="mt-4 text-center text-lg text-muted-foreground">
+                We’re confirming your payment details now.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (hasError) {
     return (
       <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl animate-pulse" />
-          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse" style={{animationDelay: "2s"}} />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
         </div>
 
         <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-10">
@@ -114,7 +158,7 @@ function PaymentSuccess() {
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse" style={{animationDelay: "2s"}} />
+        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
       {/* Main content */}
@@ -160,43 +204,41 @@ function PaymentSuccess() {
             </div>
 
             {/* Payment details */}
-            {(
-              <div className="mt-8 space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-widest text-primary">
-                  Payment Details
-                </h3>
+            <div className="mt-8 space-y-4">
+              <h3 className="text-sm font-semibold uppercase tracking-widest text-primary">
+                Payment Details
+              </h3>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {[
-                    { label: "Amount Paid", value: details.amount, icon: "💰" },
-                    { label: "Payment ID", value: details.paymentId, icon: "🔐" },
-                    { label: "Order ID", value: details.orderId, icon: "📦" },
-                    { label: "Email", value: details.email, icon: "📧" },
-                    { label: "Phone", value: details.phone, icon: "📱" },
-                    {
-                      label: "Date & Time",
-                      value: details.timestamp,
-                      icon: "🕐",
-                      fullWidth: true,
-                    },
-                  ].map((item: any) => (
-                    <div
-                      key={item.label}
-                      className={`rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all duration-300 hover:border-primary/30 hover:bg-primary/5 ${
-                        item.fullWidth ? "sm:col-span-2" : ""
-                      }`}
-                    >
-                      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                        {item.icon} {item.label}
-                      </p>
-                      <p className="mt-2 break-all font-mono text-sm font-medium text-foreground">
-                        {item.value || "-"}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  { label: "Amount Paid", value: details.amount, icon: "💰" },
+                  { label: "Payment ID", value: details.paymentId, icon: "🔐" },
+                  { label: "Order ID", value: details.orderId, icon: "📦" },
+                  { label: "Email", value: details.email, icon: "📧" },
+                  { label: "Phone", value: details.phone, icon: "📱" },
+                  {
+                    label: "Date & Time",
+                    value: details.timestamp,
+                    icon: "🕐",
+                    fullWidth: true,
+                  },
+                ].map((item: any) => (
+                  <div
+                    key={item.label}
+                    className={`rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all duration-300 hover:border-primary/30 hover:bg-primary/5 ${
+                      item.fullWidth ? "sm:col-span-2" : ""
+                    }`}
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      {item.icon} {item.label}
+                    </p>
+                    <p className="mt-2 break-all font-mono text-sm font-medium text-foreground">
+                      {item.value || "-"}
+                    </p>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
 
             {/* Next steps */}
             <div className="mt-8 rounded-2xl border border-primary/20 bg-primary/5 p-6">

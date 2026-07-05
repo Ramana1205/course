@@ -149,19 +149,17 @@ export function RegisterModal({ open, onClose }: { open: boolean; onClose: () =>
             setMessage(verifyData?.message || "Payment verified successfully");
 
             // Redirect to payment success page with payment details
-            setTimeout(() => {
-              router.navigate({
-                to: "/payment/success",
-                search: {
-                  order_id: response.razorpay_order_id,
-                  payment_id: response.razorpay_payment_id,
-                  amount: paymentData.amount.toString(),
-                  name: parsed.data.name,
-                  email: parsed.data.email,
-                  phone: parsed.data.phone,
-                },
-              });
-            }, 1500);
+            router.navigate({
+  to: "/payment/success",
+  search: {
+    order_id: response.razorpay_order_id,
+    payment_id: response.razorpay_payment_id,
+    amount: paymentData.amount.toString(),
+    name: parsed.data.name,
+    email: parsed.data.email,
+    phone: parsed.data.phone,
+  },
+});
           } catch (err) {
             setStatus("error");
             setMessage(err instanceof Error ? err.message : "Something went wrong");

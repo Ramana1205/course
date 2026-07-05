@@ -1,14 +1,26 @@
 import { a as __toESM } from "../_runtime.mjs";
 import { c as require_react, s as require_jsx_runtime } from "../_libs/@radix-ui/react-accordion+[...].mjs";
 import { g as useRouter } from "../_libs/@tanstack/react-router+[...].mjs";
+import { n as objectType, r as stringType } from "../_libs/zod.mjs";
+import { t as Route } from "./success-DTXR6Not.mjs";
 import { _ as CircleCheck, l as MessageCircle, p as House, u as Mail, x as ArrowLeft } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/success-BoOpATEO.js
+//#region node_modules/.nitro/vite/services/ssr/assets/success-CB6VfMfI.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var WHATSAPP_NUMBER = "919876543210";
+var WHATSAPP_NUMBER = "919848792438";
+objectType({
+	order_id: stringType().trim().min(1).optional(),
+	payment_id: stringType().trim().min(1).optional(),
+	amount: stringType().trim().min(1).optional(),
+	name: stringType().trim().min(1).optional(),
+	email: stringType().trim().min(1).optional(),
+	phone: stringType().trim().min(1).optional()
+});
 function PaymentSuccess() {
 	const router = useRouter();
+	const search = Route.useSearch();
 	const [isAnimating, setIsAnimating] = (0, import_react.useState)(false);
+	const [isMounted, setIsMounted] = (0, import_react.useState)(false);
 	const [details, setDetails] = (0, import_react.useState)({
 		name: void 0,
 		email: void 0,
@@ -19,25 +31,26 @@ function PaymentSuccess() {
 	});
 	const [hasError, setHasError] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
-		setTimeout(() => setIsAnimating(true), 100);
-		const urlParams = new URLSearchParams(window.location.search);
-		const orderId = urlParams.get("order_id");
-		const paymentId = urlParams.get("payment_id");
-		const amount = urlParams.get("amount");
-		const name = urlParams.get("name");
-		const email = urlParams.get("email");
-		const phone = urlParams.get("phone");
+		setIsMounted(true);
+		const timeoutId = window.setTimeout(() => setIsAnimating(true), 100);
+		const orderId = search.order_id;
+		const paymentId = search.payment_id;
+		const amount = search.amount;
+		const name = search.name;
+		const email = search.email;
+		const phone = search.phone;
 		if (!orderId || !paymentId || !amount) {
 			setHasError(true);
-			return;
+			return () => window.clearTimeout(timeoutId);
 		}
+		setHasError(false);
 		setDetails({
 			name: name || "Valued Customer",
 			email: email || "-",
 			phone: phone || "-",
 			paymentId,
 			orderId,
-			amount: amount ? `₹${parseInt(amount) / 100}` : "₹119",
+			amount: amount ? `₹${parseInt(amount, 10) / 100}` : "₹119",
 			timestamp: (/* @__PURE__ */ new Date()).toLocaleString("en-IN", {
 				year: "numeric",
 				month: "long",
@@ -46,13 +59,53 @@ function PaymentSuccess() {
 				minute: "2-digit"
 			})
 		});
-	}, []);
+		return () => window.clearTimeout(timeoutId);
+	}, [
+		search.order_id,
+		search.payment_id,
+		search.amount,
+		search.name,
+		search.email,
+		search.phone
+	]);
 	const handleBackHome = () => {
 		router.navigate({ to: "/" });
 	};
 	const handleContactSupport = () => {
 		window.open(`https://wa.me/${WHATSAPP_NUMBER}`, "_blank");
 	};
+	if (!isMounted) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: "relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-primary/5",
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "absolute inset-0 overflow-hidden",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl animate-pulse" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-pink-500/5 blur-3xl animate-pulse",
+				style: { animationDelay: "2s" }
+			})]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: "relative z-10 flex min-h-screen items-center justify-center px-4 py-10",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: "w-full max-w-2xl",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "glass rounded-3xl p-8 shadow-2xl sm:p-12",
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: "mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-primary/10",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" })
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+							className: "text-center font-[Sora] text-4xl font-bold text-foreground sm:text-5xl",
+							children: "Preparing your payment receipt"
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+							className: "mt-4 text-center text-lg text-muted-foreground",
+							children: "We’re confirming your payment details now."
+						})
+					]
+				})
+			})
+		})]
+	});
 	if (hasError) return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: "relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-primary/5",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
