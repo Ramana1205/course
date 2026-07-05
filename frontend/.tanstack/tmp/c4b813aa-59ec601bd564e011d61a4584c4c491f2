@@ -1,0 +1,180 @@
+import { useEffect, useState } from "react";
+import { useNavigate, createFileRoute } from "@tanstack/react-router";
+import { CheckCircle2, Download } from "lucide-react";
+
+export const Route = createFileRoute("/payment/success")({
+  component: PaymentSuccess,
+});
+
+interface Student {
+  name: string;
+  email: string;
+  course: string;
+  paymentId: string;
+}
+
+function PaymentSuccess() {
+  const navigate = useNavigate();
+  const [student, setStudent] = useState<Student | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get student data from session/localStorage
+    const studentData = sessionStorage.getItem("student");
+    if (studentData) {
+      setStudent(JSON.parse(studentData));
+    }
+    setLoading(false);
+  }, []);
+
+  const handleDownloadCertificate = () => {
+    // TODO: Implement certificate download
+    alert("Certificate download coming soon!");
+  };
+
+  const handleGoHome = () => {
+    navigate({ to: "/" });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary to-primary-dark">
+        <div className="text-center">
+          <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary-foreground border-t-transparent"></div>
+          <p className="text-primary-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-primary to-primary-dark px-4 py-8">
+      <div className="w-full max-w-2xl">
+        {/* Success Card */}
+        <div className="rounded-2xl bg-card p-8 shadow-2xl">
+          <div className="mb-6 flex justify-center">
+            <div className="rounded-full bg-primary/10 p-5">
+              <CheckCircle2 className="h-12 w-12 text-primary" />
+            </div>
+          </div>
+
+          <h1 className="text-center text-3xl font-bold text-foreground">
+            Payment Successful! 🎉
+          </h1>
+          <p className="mt-2 text-center text-sm text-muted-foreground">
+            Your registration has been confirmed and payment verified.
+          </p>
+
+          {/* Student Details */}
+          <div className="mt-8 space-y-4 rounded-lg bg-muted/30 p-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Registered Name
+              </p>
+              <p className="mt-1 text-lg font-semibold text-foreground">
+                {student?.name || "Student"}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Email Address
+              </p>
+              <p className="mt-1 text-lg font-semibold text-foreground">
+                {student?.email || "email@example.com"}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Course Access
+              </p>
+              <p className="mt-1 text-lg font-semibold text-foreground">
+                {student?.course || "All 3 Courses"}
+              </p>
+            </div>
+
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Payment ID
+              </p>
+              <p className="mt-1 font-mono text-xs text-muted-foreground">
+                {student?.paymentId || "N/A"}
+              </p>
+            </div>
+          </div>
+
+          {/* Next Steps */}
+          <div className="mt-8 space-y-4 rounded-lg bg-primary/5 p-6">
+            <h2 className="font-semibold text-foreground">Next Steps</h2>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-3">
+                <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  1
+                </span>
+                <span>
+                  Check your registered email for login credentials and course access link
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  2
+                </span>
+                <span>
+                  Log in to your account and start learning immediately with lifetime access
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  3
+                </span>
+                <span>
+                  Join our community Discord for questions and peer support
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  4
+                </span>
+                <span>
+                  Complete all modules to earn certificates for your portfolio
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Actions */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <button
+              onClick={handleGoHome}
+              className="flex-1 rounded-lg bg-primary px-6 py-3 text-center font-semibold text-primary-foreground transition hover:opacity-90"
+            >
+              Back to Home
+            </button>
+            <a
+              href="mailto:support@codesprint.com"
+              className="flex-1 rounded-lg border border-primary/30 px-6 py-3 text-center font-semibold text-primary transition hover:bg-primary/5"
+            >
+              Contact Support
+            </a>
+          </div>
+
+          {/* Info Box */}
+          <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-4">
+            <p className="text-xs text-muted-foreground">
+              <strong>💡 Tip:</strong> Make sure to check your spam/promotions folder if
+              you don't see the email within 5 minutes. If you have any issues, reach out
+              to our support team.
+            </p>
+          </div>
+        </div>
+
+        {/* Footer Note */}
+        <p className="mt-6 text-center text-xs text-muted-foreground">
+          Thank you for joining CodeSprint! We're excited to have you as part of our
+          community.
+        </p>
+      </div>
+    </div>
+  );
+}
